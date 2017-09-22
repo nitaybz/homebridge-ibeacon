@@ -1,4 +1,5 @@
 var Accessory, Service, Characteristic;
+var iBleacon = require('bleacon');
 var Bleacon = require('bleacon');
 var KalmanFilter = require('kalmanjs').default;
 
@@ -16,14 +17,14 @@ function iBeaconPlatform(log, config, api) {
         this.api = api;
     }
     var self = this;
-    Bleacon.startScanning("","","", true);
-    Bleacon.on('discover', function(bleacon) {
+    iBleacon.startScanning("","","", true);
+    iBleacon.on('discover', function(bleacon) {
         self.log("************** Found iBeacon **************")
         self.log("UUID: " + bleacon.uuid)
         self.log("Proximity: " + bleacon.proximity)
     })
     setTimeout(function(){
-        Bleacon.stopScanning()
+        iBleacon.stopScanning()
     }, 3000)
     
     this.kalman = function(array){
@@ -78,7 +79,7 @@ iBeaconPlatform.prototype = {
                     self.scans.shift();
                 }
             })
-        }, 5000)
+        }, 3000)
 
         callback(myAccessories);
     }
@@ -122,12 +123,12 @@ function BeaconAccessory(log, config, thisPlatform) {
         // if distance is bigger than range + threshold
         if (kalmanCalculated >= (self.range+self.threshold) && self.occupied){
             self.occupied = false;
-            this.service.getCharacteristic(Characteristic.OccupancyDetected).updateValue(false);
+            self.service.getCharacteristic(Characteristic.OccupancyDetected).updateValue(false);
         }
         // if distance is smaller than range - threshold
         if (kalmanCalculated <= (self.range-self.threshold) && !self.occupied){
             self.occupied = true;
-            this.service.getCharacteristic(Characteristic.OccupancyDetected).updateValue(true);
+            self.service.getCharacteristic(Characteristic.OccupancyDetected).updateValue(true);
         }
     },1000)
 

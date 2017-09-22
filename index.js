@@ -127,6 +127,7 @@ function BeaconAccessory(log, config, thisPlatform) {
         if (kalmanCalculated >= (self.range+self.threshold) && self.occupied){
             self.occupied = false;
             self.service.getCharacteristic(Characteristic.OccupancyDetected).updateValue(false);
+            self.log("Not Occupied!")
             
         }
         // if distance is smaller than range - threshold

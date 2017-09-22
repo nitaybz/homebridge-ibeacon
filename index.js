@@ -50,7 +50,7 @@ function iBeaconPlatform(log, config, api) {
     }
 }
 
-iBeaconPlatform.prototype = {
+broadlinkPlatform.prototype = {
     accessories: function(callback) {
         var self = this;
         //For each device in cfg, create an accessory!
@@ -113,8 +113,8 @@ function BeaconAccessory(log, config, thisPlatform) {
             }
         }
         
-        kalmanArray = kalman(rssiArray)
-        kalmanCalculated = calculateDistance(parseInt(kalmanArray[kalmanArray.length - 1]), self.measuredPower)
+        kalmanArray = platform.kalman(rssiArray)
+        kalmanCalculated = platform.calculateDistance(parseInt(kalmanArray[kalmanArray.length - 1]), self.measuredPower)
         self.log("Estimated Distance - " + kalmanCalculated.toFixed(2))
 
         // if distance is bigger than range + threshold

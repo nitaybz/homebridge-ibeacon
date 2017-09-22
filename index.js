@@ -21,7 +21,9 @@ function iBeaconPlatform(log, config, api) {
         this.log("UUID: " + bleacon.uuid)
         this.log("Proximity: " + bleacon.proximity)
     })
-    setTimeout(Bleacon.stopScanning(), 3000)
+    setTimeout(function(){
+        Bleacon.stopScanning()
+    }, 3000)
     
     this.kalman = function(array){
         var kalmanFilter = new KalmanFilter({R: 0.003, Q: 9});

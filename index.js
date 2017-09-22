@@ -121,17 +121,19 @@ function BeaconAccessory(log, config, thisPlatform) {
         kalmanArray = platform.kalman(rssiArray)
 
         kalmanCalculated = platform.calculateDistance(parseInt(kalmanArray[kalmanArray.length - 1]), self.measuredPower)
-        self.log("Estimated Distance - " + kalmanCalculated.toFixed(2))
+        //self.log("Estimated Distance - " + kalmanCalculated.toFixed(2))
 
         // if distance is bigger than range + threshold
         if (kalmanCalculated >= (self.range+self.threshold) && self.occupied){
             self.occupied = false;
             self.service.getCharacteristic(Characteristic.OccupancyDetected).updateValue(false);
+            
         }
         // if distance is smaller than range - threshold
         if (kalmanCalculated <= (self.range-self.threshold) && !self.occupied){
             self.occupied = true;
             self.service.getCharacteristic(Characteristic.OccupancyDetected).updateValue(true);
+            self.log("Occupancy Detected!")
         }
     },1000)
 

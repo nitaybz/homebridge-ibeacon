@@ -15,11 +15,12 @@ function iBeaconPlatform(log, config, api) {
     if (api) {
         this.api = api;
     }
+    var self = this;
     Bleacon.startScanning("","","", true);
     Bleacon.on('discover', function(bleacon) {
-        this.log("************** Found iBeacon **************")
-        this.log("UUID: " + bleacon.uuid)
-        this.log("Proximity: " + bleacon.proximity)
+        self.log("************** Found iBeacon **************")
+        self.log("UUID: " + bleacon.uuid)
+        self.log("Proximity: " + bleacon.proximity)
     })
     setTimeout(function(){
         Bleacon.stopScanning()
@@ -114,6 +115,7 @@ function BeaconAccessory(log, config, thisPlatform) {
         }
         
         kalmanArray = platform.kalman(rssiArray)
+
         kalmanCalculated = platform.calculateDistance(parseInt(kalmanArray[kalmanArray.length - 1]), self.measuredPower)
         self.log("Estimated Distance - " + kalmanCalculated.toFixed(2))
 

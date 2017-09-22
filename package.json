@@ -4,6 +4,7 @@
   "description": "Work in Progress...",
   "license": "MIT",
   "keywords": [
+    "homebridge-plugin"
   ],
   "engines": {
     "node": ">=0.12.0",

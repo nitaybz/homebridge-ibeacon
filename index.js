@@ -26,8 +26,8 @@ function iBeaconPlatform(log, config, api) {
         }
     })
     setTimeout(function(){
+        started = true;
         Bleacon.stopScanning()
-        var started = true;
     }, 3000)
     
     this.kalman = function(array){

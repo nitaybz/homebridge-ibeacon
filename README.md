@@ -1,2 +1,1 @@
-# homebridge-ibeacon
-Work In Progress...
+**Work in Progress**

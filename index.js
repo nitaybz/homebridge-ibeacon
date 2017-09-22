@@ -50,7 +50,7 @@ function iBeaconPlatform(log, config, api) {
     }
 }
 
-broadlinkPlatform.prototype = {
+iBeaconPlatform.prototype = {
     accessories: function(callback) {
         var self = this;
         //For each device in cfg, create an accessory!

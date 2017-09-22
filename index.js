@@ -1,5 +1,4 @@
 var Accessory, Service, Characteristic;
-var iBleacon = require('bleacon');
 var Bleacon = require('bleacon');
 var KalmanFilter = require('kalmanjs').default;
 
@@ -17,14 +16,18 @@ function iBeaconPlatform(log, config, api) {
         this.api = api;
     }
     var self = this;
-    iBleacon.startScanning("","","", true);
-    iBleacon.on('discover', function(bleacon) {
-        self.log("************** Found iBeacon **************")
-        self.log("UUID: " + bleacon.uuid)
-        self.log("Proximity: " + bleacon.proximity)
+    var started = false;
+    Bleacon.startScanning("","","", true);
+    Bleacon.on('discover', function(bleacon) {
+        if (!started){
+            self.log("************** Found iBeacon **************")
+            self.log("UUID: " + bleacon.uuid)
+            self.log("Proximity: " + bleacon.proximity)
+        }
     })
     setTimeout(function(){
-        iBleacon.stopScanning()
+        Bleacon.stopScanning()
+        var started = true;
     }, 3000)
     
     this.kalman = function(array){
